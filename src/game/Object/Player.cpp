@@ -621,6 +621,9 @@ Player::Player(WorldSession* session): Unit(), m_mover(this), m_camera(this), m_
     m_lastFallTime = 0;
     // Initialize last fall Z coordinate to 0
     m_lastFallZ = 0;
+
+    _activeCheats = CHEAT_NONE;
+
 #ifdef ENABLE_PLAYERBOTS
     // Initialize player bot AI to NULL
     m_playerbotAI = NULL;

@@ -193,6 +193,13 @@ ChatCommand* ChatHandler::getCommandTable()
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
+    static ChatCommand cheatCommandTable[] =
+    {
+        { "god",            SEC_GAMEMASTER,     false, &ChatHandler::HandleGodModeCheatCommand,         "", NULL },
+        { NULL,             0,                  false, NULL,                                            "", NULL }
+
+    };
+
     static ChatCommand debugPlayCommandTable[] =
     {
         { "cinematic",      SEC_MODERATOR,      false, &ChatHandler::HandleDebugPlayCinematicCommand,       "", NULL },
@@ -716,6 +723,7 @@ ChatCommand* ChatHandler::getCommandTable()
         { "ahbot",          SEC_ADMINISTRATOR,  true,  NULL,                                           "", ahbotCommandTable    },
         { "cast",           SEC_ADMINISTRATOR,  false, NULL,                                           "", castCommandTable     },
         { "character",      SEC_GAMEMASTER,     true,  NULL,                                           "", characterCommandTable},
+		{ "cheat",          SEC_MODERATOR,      false, NULL,                                           "", cheatCommandTable    },
         { "debug",          SEC_MODERATOR,      true,  NULL,                                           "", debugCommandTable    },
         { "event",          SEC_GAMEMASTER,     false, NULL,                                           "", eventCommandTable    },
         { "gm",             SEC_PLAYER,         true,  NULL,                                           "", gmCommandTable       },

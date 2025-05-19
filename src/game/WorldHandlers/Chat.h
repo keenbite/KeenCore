@@ -279,6 +279,8 @@ class ChatHandler
         bool HandleCharacterRenameCommand(char* args);
         bool HandleCharacterReputationCommand(char* args);
 
+        bool HandleGodModeCheatCommand(char* args);
+
         bool HandleDebugAnimCommand(char* args);
         bool HandleDebugBattlegroundCommand(char* args);
         bool HandleDebugGetItemStateCommand(char* args);

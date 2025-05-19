@@ -191,6 +191,32 @@ bool ChatHandler::HandleCharacterReputationCommand(char* args)
     return true;
 }
 
+bool ChatHandler::HandleGodModeCheatCommand(char* args)
+{
+    if (!m_session || !m_session->GetPlayer())
+        return false;
+
+    std::string argstr = (char*)args;
+
+    if (!*args)
+        argstr = (m_session->GetPlayer()->GetCommandStatus(CHEAT_GOD)) ? "off" : "on";
+
+    if (argstr == "off")
+    {
+        m_session->GetPlayer()->SetCommandStatusOff(CHEAT_GOD);
+        SendSysMessage(GetMangosString(LANG_CHEAT_OFF));
+        return true;
+    }
+    else if (argstr == "on")
+    {
+        m_session->GetPlayer()->SetCommandStatusOn(CHEAT_GOD);
+        SendSysMessage(GetMangosString(LANG_CHEAT_ON));
+        return true;
+    }
+
+    return false;
+}
+
 /**********************************************************************
     CommandTable : characterDeletedCommandTable
 /***********************************************************************/

@@ -786,6 +786,16 @@ enum PlayerDismountResult
     DISMOUNTRESULT_OK           = 3     // no error
 };
 
+enum PlayerCommandStates
+{
+    CHEAT_NONE      = 0x00,
+    CHEAT_GOD       = 0x01,
+    CHEAT_CASTTIME  = 0x02,
+    CHEAT_COOLDOWN  = 0x04,
+    CHEAT_POWER     = 0x08,
+    CHEAT_WATERWALK = 0x10
+};
+
 class PlayerTaxi
 {
     public:
@@ -1204,6 +1214,11 @@ class Player : public Unit
 
         // Initialize stats for the player's level
         void InitStatsForLevel(bool reapplyMods = false);
+
+        // .cheat command related
+        bool GetCommandStatus(uint32 command) const { return _activeCheats & command; }
+        void SetCommandStatusOn(uint32 command) { _activeCheats |= command; }
+        void SetCommandStatusOff(uint32 command) { _activeCheats &= ~command; }
 
         // Played Time Stuff
         time_t m_logintime; // Login time
@@ -3801,6 +3816,7 @@ class Player : public Unit
         float m_summon_z; // Summon Z coordinate
 
     private:
+
         uint32 m_created_date = 0;
         // internal common parts for CanStore/StoreItem functions
         InventoryResult _CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemPosCountVec& dest, ItemPrototype const* pProto, uint32& count, bool swap, Item* pSrcItem) const;
@@ -3908,6 +3924,8 @@ class Player : public Unit
 
         // Reputation manager for the player
         ReputationMgr  m_reputationMgr;
+
+        uint32 _activeCheats;
 };
 
 void AddItemsSetItem(Player* player, Item* item);
