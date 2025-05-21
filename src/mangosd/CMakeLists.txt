@@ -1,28 +1,27 @@
-#/**
-# * MaNGOS is a full featured server for World of Warcraft, supporting
-# * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
-# *
-# * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
-# *
-# * This program is free software; you can redistribute it and/or modify
-# * it under the terms of the GNU General Public License as published by
-# * the Free Software Foundation; either version 2 of the License, or
-# * (at your option) any later version.
-# *
-# * This program is distributed in the hope that it will be useful,
-# * but WITHOUT ANY WARRANTY; without even the implied warranty of
-# * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# * GNU General Public License for more details.
-# *
-# * You should have received a copy of the GNU General Public License
-# * along with this program; if not, write to the Free Software
-# * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-# *
-# * World of Warcraft, and all World of Warcraft or Warcraft art, images,
-# * and lore are copyrighted by Blizzard Entertainment, Inc.
-# */
+# 
+# Project: KeenCore
+# License: GNU General Public License v2.0 or later (GPL-2.0+)
+#
+# This file is part of KeenCore.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Originally based on MaNGOS (Massive Network Game Object Server)
+# Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
+#
 
-#Main Files
+# Main Files
 set(SRC_GRP_MAIN
   AFThread.cpp
   AFThread.h
@@ -42,21 +41,20 @@ set(SRC_GRP_SOAP
 )
 source_group("SOAP" FILES ${SRC_GRP_SOAP})
 
-if(WIN32)
-    set(PRODUCT_NAME "mangosd.exe")
-    set(PRODUCT_ICON ${CMAKE_CURRENT_SOURCE_DIR}/mangosd.ico)
-    set(PRODUCT_DESCRIPTION "${MANGOS_PKG} World Server")
-    configure_file(${CMAKE_SOURCE_DIR}/cmake/win/VersionInfo.h.in ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h)
+# Generate configuration file
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mangosd.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist)
+
+if( WIN32 )
+  set(mangosd_SRCS
+    ${mangosd_SRCS}
+    mangosd.rc)
 endif()
 
-
+# Create executable
 add_executable(mangosd
     ${SRC_GRP_MAIN}
     $<$<BOOL:${SOAP}>:${SRC_GRP_SOAP}>
-    $<$<BOOL:${WIN32}>:
-        ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h
-        ${CMAKE_SOURCE_DIR}/cmake/win/VersionInfo.rc
-    >
+	${mangosd_SRCS}
 )
 
 target_include_directories(mangosd
@@ -77,22 +75,12 @@ target_link_libraries(mangosd
         $<$<BOOL:${SOAP}>:gsoap>
         Threads::Threads
         ${OPENSSL_LIBRARIES}
-#if (defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 3)
-    OpenSSL::Crypto
-#endif()
-
+		OpenSSL::Crypto
 )
-
-install(
-    TARGETS mangosd
-    DESTINATION ${BIN_DIR}
-)
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mangosd.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist)
-install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist
-    DESTINATION ${CONF_INSTALL_DIR}
-)
+		
+# Installation
+install(TARGETS mangosd DESTINATION ${BIN_DIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist DESTINATION ${CONF_INSTALL_DIR})
 
 if(WIN32 AND MSVC)
     install(
