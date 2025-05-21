@@ -1,28 +1,27 @@
-/**
- * MaNGOS is a full featured server for World of Warcraft, supporting
- * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
  *
- * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
+ * This file is part of KeenCore.
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,r
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
-/// \addtogroup realmd Realm Daemon
+/// \addtogroup authserver
 /// @{
 /// \file
 
@@ -53,9 +52,9 @@
 
 #ifdef WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "realmd";
-char serviceLongName[] = "MaNGOS realmd service";
-char serviceDescription[] = "Massive Network Game Object Server";
+char serviceName[] = "authserver";
+char serviceLongName[] = "KeenCore auth service";
+char serviceDescription[] = "KeenCore Multi-Versoin Server";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -73,7 +72,7 @@ void HookSignals();
 
 bool stopEvent = false;                                     ///< Setting it to true stops the server
 
-DatabaseType LoginDatabase;                                 ///< Accessor to the realm server database
+DatabaseType LoginDatabase;                                 ///< Accessor to the auth server database
 
 /// Print out the usage string for this program on the console.
 void usage(const char* prog)
@@ -94,11 +93,11 @@ void usage(const char* prog)
                    , prog);
 }
 
-/// Launch the realm server
+/// Launch the authserver
 extern int main(int argc, char** argv)
 {
     ///- Command line parsing
-    char const* cfg_file = REALMD_CONFIG_LOCATION;
+    char const* cfg_file = AUTHSERVER_CONFIG_LOCATION;
 
     char const* options = ":c:s:";
 
@@ -206,17 +205,17 @@ extern int main(int argc, char** argv)
 
     sLog.Initialize();
 
-    sLog.outString("%s [realm-daemon]", GitRevision::GetProjectRevision());
+    sLog.outString("%s [authserver]", GitRevision::GetProjectRevision());
     sLog.outString("%s", GitRevision::GetFullRevision());
     sLog.outString("<Ctrl-C> to stop.\n");
     sLog.outString("Using configuration file %s.", cfg_file);
 
     ///- Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
-    if (confVersion < REALMD_CONFIG_VERSION)
+    if (confVersion < AUTH_CONFIG_VERSION)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: Your realmd.conf version indicates your conf file is out of date!");
+        sLog.outError(" WARNING: Your authserver.conf version indicates your conf file is out of date!");
         sLog.outError("          Please check for updates, as your current default values may cause");
         sLog.outError("          strange behavior.");
         sLog.outError("*****************************************************************************");
@@ -269,7 +268,7 @@ extern int main(int argc, char** argv)
 
     sLog.outBasic("Max allowed open files is %d", ACE::max_handles());
 
-    /// realmd PID file creation
+    /// authserver PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
     if (!pidfile.empty())
     {
@@ -310,14 +309,14 @@ extern int main(int argc, char** argv)
     ///- Launch the listening network socket
     ACE_Acceptor<AuthSocket, ACE_SOCK_Acceptor> acceptor;
 
-    uint16 rmport = sConfig.GetIntDefault("RealmServerPort", DEFAULT_REALMSERVER_PORT);
+    uint16 rmport = sConfig.GetIntDefault("AuthServerPort", DEFAULT_AUTHSERVER_PORT);
     std::string bind_ip = sConfig.GetStringDefault("BindIP", "0.0.0.0");
 
     ACE_INET_Addr bind_addr(rmport, bind_ip.c_str());
 
     if (acceptor.open(bind_addr, ACE_Reactor::instance(), ACE_NONBLOCK) == -1)
     {
-        sLog.outError("MaNGOS realmd can not bind to %s:%d", bind_ip.c_str(), rmport);
+        sLog.outError("Authserver can not bind to %s:%d", bind_ip.c_str(), rmport);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -342,7 +341,7 @@ extern int main(int argc, char** argv)
 
                 if (!curAff)
                 {
-                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for realmd. Accessible processors bitmask (hex): %x", Aff, appAff);
+                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for authserver. Accessible processors bitmask (hex): %x", Aff, appAff);
                 }
                 else
                 {
@@ -365,11 +364,11 @@ extern int main(int argc, char** argv)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
             {
-                sLog.outString("realmd process priority class set to HIGH");
+                sLog.outString("authserver process priority class set to HIGH");
             }
             else
             {
-                sLog.outError("Can't set realmd process priority class.");
+                sLog.outError("Can't set authserver process priority class.");
             }
             sLog.outString();
         }
@@ -460,7 +459,7 @@ bool StartDB()
         return false;
     }
 
-    if (!LoginDatabase.CheckDatabaseVersion(DATABASE_REALMD))
+    if (!LoginDatabase.CheckDatabaseVersion(DATABASE_AUTH))
     {
         ///- Wait for already started DB delay threads to end
         LoginDatabase.HaltDelayThread();

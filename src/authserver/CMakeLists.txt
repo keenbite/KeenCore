@@ -38,34 +38,34 @@ file(GLOB_RECURSE SRC_GRP_SOCKB SocketBuffer/*.cpp SocketBuffer/*.h)
 source_group("Socket Buffer" FILES ${SRC_GRP_SOCKB})
 
 # Generate configuration file
-configure_file(realmd.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/realmd.conf.dist)
+configure_file(authserver.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/authserver.conf.dist)
 
 if( WIN32 )
-  set(realmd_SRCS
-    ${realmd_SRCS}
-    realmd.rc)
+  set(authserver_SRCS
+    ${authserver_SRCS}
+    authserver.rc)
 endif()
 
 # Create executable
-add_executable(realmd
+add_executable(authserver
     ${SRC_GRP_AUTH}
     ${SRC_GRP_PATCH}
     ${SRC_GRP_REALM}
     ${SRC_GRP_SOCKB}
     Main.cpp
-	${realmd_SRCS}
+	${authserver_SRCS}
 )
 
-target_compile_features(realmd PUBLIC cxx_std_17)
-set_target_properties(realmd PROPERTIES CXX_EXTENSIONS OFF)
+target_compile_features(authserver PUBLIC cxx_std_17)
+set_target_properties(authserver PROPERTIES CXX_EXTENSIONS OFF)
 
-target_include_directories(realmd
+target_include_directories(authserver
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${OPENSSL_INCLUDE_DIR}
 )
 
-target_link_libraries(realmd
+target_link_libraries(authserver
     PUBLIC
         shared
         Threads::Threads
@@ -74,12 +74,12 @@ target_link_libraries(realmd
 )
 
 # Installation
-install(TARGETS realmd DESTINATION ${BIN_DIR})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/realmd.conf.dist DESTINATION ${CONF_INSTALL_DIR})
+install(TARGETS authserver DESTINATION ${BIN_DIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/authserver.conf.dist DESTINATION ${CONF_INSTALL_DIR})
 
 if(WIN32 AND MSVC)
     install(
-        FILES $<TARGET_PDB_FILE:realmd>
+        FILES $<TARGET_PDB_FILE:authserver>
         DESTINATION ${BIN_DIR}
         OPTIONAL
     )

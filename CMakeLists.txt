@@ -40,7 +40,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Define build options
 option(BUILD_MANGOSD "Build the main server" ON)
-option(BUILD_REALMD "Build the login server" ON)
+option(BUILD_AUTHSERVER "Build the login server" ON)
 option(BUILD_TOOLS "Build the map/vmap/mmap extractors" ON)
 option(USE_STORMLIB "Use StormLib for reading MPQs" ON)
 option(SCRIPT_LIB_ELUNA "Compile with support for Eluna scripts" ON)

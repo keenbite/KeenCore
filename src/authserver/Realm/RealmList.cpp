@@ -1,29 +1,28 @@
-/**
- * MaNGOS is a full featured server for World of Warcraft, supporting
- * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
  *
- * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
+ * This file is part of KeenCore.
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
 /** \file
-    \ingroup realmd
+    \ingroup authserver
 */
 
 #include "Common.h"
@@ -37,11 +36,7 @@ INSTANTIATE_SINGLETON_1(RealmList);
 
 extern DatabaseType LoginDatabase;
 
-// will only support WoW 1.12.1/1.12.2/1.12.3, WoW:TBC 2.4.3, WoW:WotLK 3.3.5a and official release for WoW:Cataclysm and later, client builds 15595, 10505, 8606, 6005, 5875
-// if you need more from old build then add it in cases in realmd sources code
-// list sorted from high to low build and first build used as low bound for accepted by default range (any > it will accepted by realmd at least)
-
-static const RealmBuildInfo ExpectedRealmdClientBuilds[] =
+static const RealmBuildInfo ExpectedAuthServerClientBuilds[] =
 {
     // highest supported build, also auto accept all above for simplify future supported builds testing
     {40000, 9, 0, 0, ' '},  // SHADOWLANDS
@@ -62,16 +57,16 @@ static const RealmBuildInfo ExpectedRealmdClientBuilds[] =
 RealmBuildInfo const* FindBuildInfo(uint16 _build)
 {
     // first build is low bound of always accepted range
-    if (_build >= ExpectedRealmdClientBuilds[0].build)
+    if (_build >= ExpectedAuthServerClientBuilds[0].build)
     {
-        return &ExpectedRealmdClientBuilds[0];
+        return &ExpectedAuthServerClientBuilds[0];
     }
 
     // continue from 1 with explicit equal check
-    for (int i = 1; ExpectedRealmdClientBuilds[i].build; ++i)
-        if (_build == ExpectedRealmdClientBuilds[i].build)
+    for (int i = 1; ExpectedAuthServerClientBuilds[i].build; ++i)
+        if (_build == ExpectedAuthServerClientBuilds[i].build)
         {
-            return &ExpectedRealmdClientBuilds[i];
+            return &ExpectedAuthServerClientBuilds[i];
         }
 
     // none appropriate build

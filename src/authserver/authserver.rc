@@ -24,7 +24,7 @@
 #include "windows.h"
 #include "resource.h"
 
-IDI_REALMD_ICON ICON DISCARDABLE "realmd.ico"
+IDI_AUTHSERVER_ICON ICON DISCARDABLE "authserver.ico"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUSD)
 #ifdef _WIN32
@@ -51,12 +51,12 @@ VS_VERSION_INFO VERSIONINFO
          BLOCK "080004b0" // US English, Unicode
          BEGIN
              VALUE "CompanyName",      "KeenCore Project"
-             VALUE "FileDescription",  "KeenCore Realmd Server"
+             VALUE "FileDescription",  "KeenCore Authentication Server"
              VALUE "FileVersion",      "1.0.0.0"
-             VALUE "InternalName",     "realmd"
+             VALUE "InternalName",     "authserver"
              VALUE "LegalCopyright",   "Copyright (C) 2025 KeenCore"
-             VALUE "OriginalFilename", "realmd.exe"
-             VALUE "ProductName",      "Realmd Server"
+             VALUE "OriginalFilename", "authserver.exe"
+             VALUE "ProductName",      "Authentication Server"
              VALUE "ProductVersion",   "1.0.0.0"
          END
      END

@@ -1,29 +1,28 @@
-/**
- * MaNGOS is a full featured server for World of Warcraft, supporting
- * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
  *
- * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
+ * This file is part of KeenCore.
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
 /** \file
-    \ingroup realmd
+    \ingroup authserver
 */
 
 #include "Common.h"
@@ -590,7 +589,7 @@ bool AuthSocket::_HandleLogonProof()
 
         if (!PatchCache::instance()->GetHash(tmp, (uint8*)&xferh.md5))
         {
-            // calculate patch md5, happens if patch was added while realmd was running
+            // calculate patch md5, happens if patch was added while authserver was running
             PatchCache::instance()->LoadPatchMD5(tmp);
             PatchCache::instance()->GetHash(tmp, (uint8*)&xferh.md5);
         }
@@ -741,7 +740,7 @@ bool AuthSocket::_HandleLogonProof()
                     if (WrongPassBanType)
                     {
                         uint32 acc_id = fields[0].GetUInt32();
-                        LoginDatabase.PExecute("INSERT INTO `account_banned` VALUES ('%u',UNIX_TIMESTAMP(),UNIX_TIMESTAMP()+'%u','MaNGOS realmd','Failed login autoban',1)",
+                        LoginDatabase.PExecute("INSERT INTO `account_banned` VALUES ('%u',UNIX_TIMESTAMP(),UNIX_TIMESTAMP()+'%u','Authserver','Failed login autoban',1)",
                                                acc_id, WrongPassBanTime);
                         BASIC_LOG("[AuthChallenge] account %s got banned for '%u' seconds because it failed to authenticate '%u' times",
                                   _login.c_str(), WrongPassBanTime, failed_logins);
@@ -750,7 +749,7 @@ bool AuthSocket::_HandleLogonProof()
                     {
                         std::string current_ip = get_remote_address();
                         LoginDatabase.escape_string(current_ip);
-                        LoginDatabase.PExecute("INSERT INTO `ip_banned` VALUES ('%s',UNIX_TIMESTAMP(),UNIX_TIMESTAMP()+'%u','MaNGOS realmd','Failed login autoban')",
+                        LoginDatabase.PExecute("INSERT INTO `ip_banned` VALUES ('%s',UNIX_TIMESTAMP(),UNIX_TIMESTAMP()+'%u','Authserver','Failed login autoban')",
                                                current_ip.c_str(), WrongPassBanTime);
                         BASIC_LOG("[AuthChallenge] IP %s got banned for '%u' seconds because account %s failed to authenticate '%u' times",
                                   current_ip.c_str(), WrongPassBanTime, _login.c_str(), failed_logins);

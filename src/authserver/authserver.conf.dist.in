@@ -1,0 +1,142 @@
+################################################################################
+# Authentication Server Configuration
+################################################################################
+
+[authserver]
+
+# ------------------------------------------------------------------------------
+# Database Configuration
+# ------------------------------------------------------------------------------
+
+# LoginDatabaseInfo
+#    Description: Database connection string for the authentication database.
+#    Important:   Use "." for named pipes on Windows or Unix sockets on Linux.
+#                 Ensure the credentials are correct or the server will fail to connect.
+#    Default:     "127.0.0.1;3306;root;keen;auth"
+LoginDatabaseInfo = "127.0.0.1;3306;root;keen;auth"
+
+
+# ------------------------------------------------------------------------------
+# File & Logging Settings
+# ------------------------------------------------------------------------------
+
+# LogsDir
+#    Description: Directory where log files will be stored.
+#    Important:   The specified directory must exist and be writable by the auth server.
+#                 If left empty, log files will be stored in the same directory as the executable.
+#    Default:     "" (Log files will be stored in the current directory)
+LogsDir = ""
+
+# LogFile
+#    Description: Name of the log file.
+#    Important:   If left empty, logging to a file will be disabled.
+#    Default:     "authserver.log"
+LogFile = "authserver.log"
+
+# LogTimestamp
+#    Description: Whether to append a timestamp to the log file name.
+#    Important:   A timestamp in the log file name helps identify when the log was created.
+#    Default:     0 (No timestamp)
+LogTimestamp = 0
+
+# LogLevel
+#    Description: Console log level: 
+#                 0 = Minimal output, 1 = Error messages only, 2 = Detailed logs, 3 = Debug logs.
+#    Important:   Higher values result in more detailed console output. Adjust for debugging purposes.
+#    Default:     0 (Minimal output)
+LogLevel = 0
+
+# LogTime
+#    Description: Whether to display timestamps in console log output.
+#    Important:   Enabling timestamps helps track when specific events occurred.
+#    Default:     0 (No timestamp)
+LogTime = 0
+
+# LogFileLevel
+#    Description: Log file level:
+#                 0 = Minimal logs, 1 = Errors only, 2 = Detailed logs, 3 = Debug information.
+#    Important:   Adjust based on the level of logging required. Useful for troubleshooting.
+#    Default:     0 (Minimal logs)
+LogFileLevel = 0
+
+# LogColors
+#    Description: Console message color configuration for different log types.
+#    Important:   Color-coding helps distinguish between message types. Ensure terminal supports colors.
+#                 Format: "normal detail debug error"
+#    Colors:      0 = BLACK, 1 = RED, 2 = GREEN,  3 = BROWN, 4 = BLUE, 5 = MAGENTA, 6 = CYAN, 7 = GREY,
+#                 8 = YELLOW, 9 = LRED, 10 = LGREEN, 11 = LBLUE, 12 = LMAGENTA, 13 = LCYAN, 14 = WHITE
+#    Default:     "13 7 11 9" (Colors for normal, detail, debug, and error messages)
+LogColors = "13 7 11 9"
+
+
+# ------------------------------------------------------------------------------
+# Server Settings
+# ------------------------------------------------------------------------------
+
+# PidFile
+#    Description: Path to the PID file.
+#    Important:   The PID file stores the process ID. Leave empty to disable this feature.
+#    Default:     "" (No PID file created)
+PidFile = ""
+
+# AuthServerPort
+#    Description: Port on which the authentication server listens for client connections.
+#    Important:   Ensure the port is open and not blocked by a firewall.
+#    Default:     3724
+AuthServerPort = 3724
+
+# BindIP
+#    Description: IP address the authentication server binds to.
+#    Important:   "0.0.0.0" binds to all available network interfaces. Use a specific IP to bind to a single interface.
+#    Default:     "0.0.0.0" (All available interfaces)
+BindIP = "0.0.0.0"
+
+# MaxPingTime
+#    Description: Maximum interval in minutes between database connection pings.
+#    Important:   Regular database pings ensure that the connection remains active.
+#    Default:     30
+MaxPingTime = 30
+
+# RealmsStateUpdateDelay
+#    Description: Delay (in seconds) between realm state updates for clients.
+#    Important:   0 disables automatic updates. Set a higher value if updates are less frequent.
+#    Default:     20
+RealmsStateUpdateDelay = 20
+
+
+# ------------------------------------------------------------------------------
+# Platform-Specific Settings (Windows only)
+# ------------------------------------------------------------------------------
+
+# UseProcessors
+#    Description: Processor affinity mask for multi-core systems.
+#    Important:   0 allows the OS to decide, but you can set a custom value to limit the server to specific processors (Windows only).
+#    Default:     0 (Let the OS decide)
+UseProcessors = 0
+
+# ProcessPriority
+#    Description: Set the process priority for the authentication server.
+#    Important:   A higher priority ensures the server runs more efficiently on a busy system (Windows only).
+#    Default:     1 (High priority)
+ProcessPriority = 1
+
+# WaitAtStartupError
+#    Description: How long to wait after a startup error before continuing or closing the console.
+#    Important:   Set to -1 to wait for user input, or 0 to continue immediately after an error.
+#    Default:     0 (No wait)
+WaitAtStartupError = 0
+
+
+# ------------------------------------------------------------------------------
+# Security Settings
+# ------------------------------------------------------------------------------
+
+# WrongPass.MaxCount
+#    Description: Number of failed login attempts before the account or IP is banned.
+#    Important:   0 means no ban. Useful for blocking brute force login attempts.
+#    Default:     3
+WrongPass.MaxCount = 3
+
+# WrongPass.BanTime
+#    Description: Duration (in seconds) for which the account/IP will be banned.
+#    Impo
