@@ -1,0 +1,68 @@
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
+ *
+ * This file is part of KeenCore.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
+ */
+
+#include "windows.h"
+#include "resource.h"
+
+IDI_MANGOSD_ICON ICON DISCARDABLE "mangosd.ico"
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUSD)
+#ifdef _WIN32
+LANGUAGE 0x00, 0x01 // LANG_NEUTRAL (0x00), SUBLANG_SYS_DEFAULT (0x01)
+#pragma code_page(1252)
+#endif //_WIN32
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION     1,0,0,0
+ PRODUCTVERSION  1,0,0,0
+ FILEFLAGSMASK   0x17L
+#ifdef _DEBUG
+    FILEFLAGS    0x1L
+#else
+    FILEFLAGS    0x0L
+#endif
+ FILEOS          0x4L // VOS__WINDOWS32
+ FILETYPE        0x1L // VFT_APP
+ FILESUBTYPE     0x0L
+
+ BEGIN
+     BLOCK "StringFileInfo"
+     BEGIN
+         BLOCK "080004b0" // US English, Unicode
+         BEGIN
+             VALUE "CompanyName",      "KeenCore Project"
+             VALUE "FileDescription",  "KeenCore Mangosd Server"
+             VALUE "FileVersion",      "1.0.0.0"
+             VALUE "InternalName",     "mangosd"
+             VALUE "LegalCopyright",   "Copyright (C) 2025 KeenCore"
+             VALUE "OriginalFilename", "mangosd.exe"
+             VALUE "ProductName",      "Mangosd Server"
+             VALUE "ProductVersion",   "1.0.0.0"
+         END
+     END
+     BLOCK "VarFileInfo"
+     BEGIN
+         VALUE "Translation", 0x0800, 1200
+     END
+ END
+#endif
