@@ -21,8 +21,8 @@
  * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
-#ifndef _SYSTEMCONFIG_H
-#define _SYSTEMCONFIG_H
+#ifndef SYSTEMCONFIG_H
+#define SYSTEMCONFIG_H
 
 #include "Platform/Define.h"
 
@@ -36,8 +36,8 @@
 
 // Format is YYYYMMDDRR where RR is the change in the conf file
 // for that day.
-#ifndef MANGOSD_CONFIG_VERSION
-# define MANGOSD_CONFIG_VERSION @MANGOS_WORLD_VER@
+#ifndef WORLDSERVER_CONFIG_VERSION
+# define WORLDSERVER_CONFIG_VERSION @MANGOS_WORLD_VER@
 #endif
 
 #ifndef AUTH_CONFIG_VERSION
@@ -57,10 +57,10 @@
 #define SYSCONFDIR "@CONF_INSTALL_DIR@/"
 
 #define AUTHSERVER_CONFIG_NAME         "authserver.conf"
-#define MANGOSD_CONFIG_NAME            "mangosd.conf"
+#define WORLDSERVER_CONFIG_NAME        "worldserver.conf"
 #define AUCTIONHOUSEBOT_CONFIG_NAME    "ahbot.conf"
 
-#define MANGOSD_CONFIG_LOCATION         SYSCONFDIR MANGOSD_CONFIG_NAME
+#define WORLDSERVER_CONFIG_LOCATION     SYSCONFDIR WORLDSERVER_CONFIG_NAME
 #define AUTHSERVER_CONFIG_LOCATION      SYSCONFDIR AUTHSERVER_CONFIG_NAME
 #define AUCTIONHOUSEBOT_CONFIG_LOCATION SYSCONFDIR AUCTIONHOUSEBOT_CONFIG_NAME
 

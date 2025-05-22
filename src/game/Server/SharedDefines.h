@@ -1,29 +1,28 @@
-/**
- * MaNGOS is a full featured server for World of Warcraft, supporting
- * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
  *
- * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
+ * This file is part of KeenCore.
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
-#ifndef MANGOS_SHAREDDEFINES_H
-#define MANGOS_SHAREDDEFINES_H
+#ifndef SHAREDDEFINES_H
+#define SHAREDDEFINES_H
 
 #include "Platform/Define.h"
 
@@ -2548,8 +2547,8 @@ enum TrackedAuraType
 // others will not and opposite
 // will only support 1.12.1 client (build 5875), 1.12.2 client (build 6005) and 1.12.3 client (build 6141)..
 
-#define EXPECTED_MANGOSD_CLIENT_BUILD        {5875, 6005, 6141, 0}
-#define EXPECTED_MANGOSD_CLIENT_VERSION      "1.12.x"
+#define EXPECTED_WORLDSERVER_CLIENT_BUILD        {5875, 6005, 6141, 0}
+#define EXPECTED_WORLDSERVER_CLIENT_VERSION      "1.12.x"
 
 // Max creature level (included some bosses and elite)
 #define DEFAULT_MAX_CREATURE_LEVEL 65

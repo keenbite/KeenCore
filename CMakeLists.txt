@@ -39,7 +39,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Define build options
-option(BUILD_MANGOSD "Build the main server" ON)
+option(BUILD_WORLDSERVER "Build the main server" ON)
 option(BUILD_AUTHSERVER "Build the login server" ON)
 option(BUILD_TOOLS "Build the map/vmap/mmap extractors" ON)
 option(USE_STORMLIB "Use StormLib for reading MPQs" ON)

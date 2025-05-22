@@ -21,30 +21,25 @@
  * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
-#ifndef SERVERDEFINES_H
-#define SERVERDEFINES_H
+#ifndef CLITHREAD_H
+#define CLITHREAD_H
 
-enum AccountTypes
+#include "ace/Task.h"
+
+/**
+ * @brief Command Line Interface handling thread
+ *
+ */
+class CliThread : public ACE_Task_Base
 {
-    SEC_PLAYER         = 0,
-    SEC_MODERATOR      = 1,
-    SEC_GAMEMASTER     = 2,
-    SEC_ADMINISTRATOR  = 3,
-    SEC_CONSOLE        = 4                                  // must be always last in list, accounts must have less security level always also
+    enum { BUFFSIZE = 256 };
+    public:
+        CliThread(bool);
+        int svc() override;
+        void cli_shutdown();
+    private:
+        char buffer_[BUFFSIZE];
+        bool beep_;
 };
-
-enum RealmFlags
-{
-    REALM_FLAG_NONE         = 0x00,
-    REALM_FLAG_INVALID      = 0x01,
-    REALM_FLAG_OFFLINE      = 0x02,
-    REALM_FLAG_SPECIFYBUILD = 0x04,                         // client will show realm version in RealmList screen in form "RealmName (major.minor.revision.build)"
-    REALM_FLAG_UNK1         = 0x08,
-    REALM_FLAG_UNK2         = 0x10,
-    REALM_FLAG_NEW_PLAYERS  = 0x20,
-    REALM_FLAG_RECOMMENDED  = 0x40,
-    REALM_FLAG_FULL         = 0x80
-};
-
-
 #endif
+/// @}

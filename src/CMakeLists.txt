@@ -12,19 +12,19 @@
 # Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
 #
 
-# Build the mangos shared library
+# Build the shared library
 add_subdirectory(shared)
 add_subdirectory(genrev)
 
-# Needs to link against mangos_world.lib
-if(BUILD_MANGOSD)
-    # Build the mangos game library
+# Needs to link against world.lib
+if(BUILD_WORLDSERVER)
+    # Build the game library
     add_subdirectory(game)
 endif()
 
-if(BUILD_MANGOSD)
-    # Build the mangos world server
-    add_subdirectory(mangosd)
+if(BUILD_WORLDSERVER)
+    # Build the world server
+    add_subdirectory(worldserver)
 
     # Build the selected modules
     add_subdirectory(modules)
@@ -41,7 +41,7 @@ if(BUILD_TOOLS)
 endif()
 
 # Windows Specific: Install MySQL DLL
-if((BUILD_MANGOSD OR BUILD_AUTHSERVER) AND WIN32)
+if((BUILD_WORLDSERVER OR BUILD_AUTHSERVER) AND WIN32)
     get_filename_component(MYSQL_LIB_DIR "${MySQL_LIBRARIES}" DIRECTORY)
     get_filename_component(MYSQL_LIB_DLL "${MySQL_LIBRARIES}" NAME)
     string(REPLACE ".lib" ".dll" MYSQL_LIB_DLL "${MYSQL_LIB_DLL}")

@@ -24,7 +24,7 @@
 #include "windows.h"
 #include "resource.h"
 
-IDI_MANGOSD_ICON ICON DISCARDABLE "mangosd.ico"
+IDI_WORLDSERVER_ICON ICON DISCARDABLE "worldserver.ico"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUSD)
 #ifdef _WIN32
@@ -51,12 +51,12 @@ VS_VERSION_INFO VERSIONINFO
          BLOCK "080004b0" // US English, Unicode
          BEGIN
              VALUE "CompanyName",      "KeenCore Project"
-             VALUE "FileDescription",  "KeenCore Mangosd Server"
+             VALUE "FileDescription",  "KeenCore World Server"
              VALUE "FileVersion",      "1.0.0.0"
-             VALUE "InternalName",     "mangosd"
+             VALUE "InternalName",     "worldserver"
              VALUE "LegalCopyright",   "Copyright (C) 2025 KeenCore"
-             VALUE "OriginalFilename", "mangosd.exe"
-             VALUE "ProductName",      "Mangosd Server"
+             VALUE "OriginalFilename", "worldserver.exe"
+             VALUE "ProductName",      "World Server"
              VALUE "ProductVersion",   "1.0.0.0"
          END
      END

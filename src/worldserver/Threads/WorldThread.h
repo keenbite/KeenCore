@@ -21,30 +21,25 @@
  * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
-#ifndef SERVERDEFINES_H
-#define SERVERDEFINES_H
+#ifndef WORLDTHREAD_H
+#define WORLDTHREAD_H
 
-enum AccountTypes
+#include <ace/INET_Addr.h>
+#include <ace/Task.h>
+
+#include "Common.h"
+/**
+ * @brief Heartbeat thread for the World
+ *
+ */
+class WorldThread : public ACE_Task_Base
 {
-    SEC_PLAYER         = 0,
-    SEC_MODERATOR      = 1,
-    SEC_GAMEMASTER     = 2,
-    SEC_ADMINISTRATOR  = 3,
-    SEC_CONSOLE        = 4                                  // must be always last in list, accounts must have less security level always also
+    public:
+        explicit WorldThread(uint16 port, const char* host);
+        int open(void*) override;
+        int svc() override;
+    private:
+        ACE_INET_Addr listen_addr;
 };
-
-enum RealmFlags
-{
-    REALM_FLAG_NONE         = 0x00,
-    REALM_FLAG_INVALID      = 0x01,
-    REALM_FLAG_OFFLINE      = 0x02,
-    REALM_FLAG_SPECIFYBUILD = 0x04,                         // client will show realm version in RealmList screen in form "RealmName (major.minor.revision.build)"
-    REALM_FLAG_UNK1         = 0x08,
-    REALM_FLAG_UNK2         = 0x10,
-    REALM_FLAG_NEW_PLAYERS  = 0x20,
-    REALM_FLAG_RECOMMENDED  = 0x40,
-    REALM_FLAG_FULL         = 0x80
-};
-
-
 #endif
+/// @}

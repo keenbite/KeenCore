@@ -54,7 +54,7 @@
 #include "ServiceWin32.h"
 char serviceName[] = "authserver";
 char serviceLongName[] = "KeenCore auth service";
-char serviceDescription[] = "KeenCore Multi-Versoin Server";
+char serviceDescription[] = "KeenCore Multi-Version Authentication Server";
 /*
  * -1 - not in service mode
  *  0 - stopped

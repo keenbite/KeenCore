@@ -21,10 +21,6 @@
  * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
-/// \addtogroup mangosd Mangos Daemon
-/// @{
-/// \file
-
 #include <openssl/opensslv.h>
 #include <openssl/crypto.h>
 #if defined(OPENSSL_VERSION_MAJOR) && (OPENSSL_VERSION_MAJOR >= 3)
@@ -32,7 +28,6 @@
 #endif
 #include <ace/Version.h>
 #include <ace/Get_Opt.h>
-
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
 #include "Config/Config.h"
@@ -47,11 +42,10 @@
 #include "DBCStores.h"
 #include "MassMailMgr.h"
 #include "ScriptMgr.h"
-
-#include "WorldThread.h"
-#include "CliThread.h"
-#include "AFThread.h"
-#include "RAThread.h"
+#include "Threads/WorldThread.h"
+#include "Threads/CliThread.h"
+#include "Threads/AFThread.h"
+#include "Threads/RAThread.h"
 
 #ifdef ENABLE_SOAP
   #include "SOAP/SoapThread.h"
@@ -60,9 +54,9 @@
 #ifdef _WIN32
  #include "ServiceWin32.h"
 
-  char serviceName[]        = "MaNGOS";               // service short name
-  char serviceLongName[]    = "MaNGOS World Service"; // service long name
-  char serviceDescription[] = "MaNGOS World Service - no description available";
+  char serviceName[]        = "worldserver";               // service short name
+  char serviceLongName[]    = "KeenCore World Service"; // service long name
+  char serviceDescription[] = "KeenCore Multi-Version World Server";
 
   int m_ServiceStatus = -1;
 
@@ -279,7 +273,7 @@ static void usage(const char* prog)
 int main(int argc, char** argv)
 {
     ///- Command line parsing
-    char const* cfg_file = MANGOSD_CONFIG_LOCATION;
+    char const* cfg_file = WORLDSERVER_CONFIG_LOCATION;
 
     char const* options = ":a:c:s:";
 
@@ -467,7 +461,7 @@ int main(int argc, char** argv)
     uint8 recommendedornew = sWorld.getConfig(CONFIG_BOOL_REALM_RECOMMENDED_OR_NEW) ? REALM_FLAG_NEW_PLAYERS : REALM_FLAG_RECOMMENDED;
     uint8 realmstatus = sWorld.getConfig(CONFIG_BOOL_REALM_RECOMMENDED_OR_NEW_ENABLED) ? recommendedornew : uint8(REALM_FLAG_NONE);
 
-    // set realmbuilds depend on mangosd expected builds, and set server online
+    // set realmbuilds depend on worldserver expected builds, and set server online
     std::string builds = AcceptableClientBuildsListStr();
     LoginDatabase.escape_string(builds);
     LoginDatabase.DirectPExecute("UPDATE `realmlist` SET `realmflags` = %u, `population` = 0, `realmbuilds` = '%s'  WHERE `id` = '%u'", realmstatus, builds.c_str(), realmID);

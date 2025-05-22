@@ -1,30 +1,25 @@
-/**
- * MaNGOS is a full featured server for World of Warcraft, supporting
- * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
  *
- * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
+ * This file is part of KeenCore.
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
-
-/** \file
-    \ingroup world
-*/
 
 #include "World.h"
 #include "Database/DatabaseEnv.h"
@@ -417,17 +412,17 @@ void World::LoadConfigSettings(bool reload)
     if (!confVersion)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: mangosd.conf does not include a ConfVersion variable.");
+        sLog.outError(" WARNING: worldserver.conf does not include a ConfVersion variable.");
         sLog.outError("          Your configuration file may be out of date!");
         sLog.outError("*****************************************************************************");
         Log::WaitBeforeContinueIfNeed();
     }
     else
     {
-        if (confVersion < MANGOSD_CONFIG_VERSION)
+        if (confVersion < WORLDSERVER_CONFIG_VERSION)
         {
             sLog.outError("*****************************************************************************");
-            sLog.outError(" WARNING: Your mangosd.conf version indicates your conf file is out of date!");
+            sLog.outError(" WARNING: Your worldserver.conf version indicates your conf file is out of date!");
             sLog.outError("          Please check for updates, as your current default values may cause");
             sLog.outError("          unexpected behavior.");
             sLog.outError("*****************************************************************************");
@@ -927,7 +922,7 @@ void World::LoadConfigSettings(bool reload)
     {
         if (dataPath != m_dataPath)
         {
-            sLog.outError("DataDir option can't be changed at mangosd.conf reload, using current value (%s).", m_dataPath.c_str());
+            sLog.outError("DataDir option can't be changed at worldserver.conf reload, using current value (%s).", m_dataPath.c_str());
         }
     }
     else
@@ -1000,7 +995,7 @@ void World::SetInitialWorldSettings()
         !MapManager::ExistMapAndVMap(1, 10311.3f, 832.463f) ||                  // NightElf
         !MapManager::ExistMapAndVMap(1, -2917.58f, -257.98f))                   // Tauren
     {
-        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map and vmap files in appropriate directories or correct the DataDir value in the mangosd.conf file.", m_dataPath.c_str(), m_dataPath.c_str());
+        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map and vmap files in appropriate directories or correct the DataDir value in the worldserver.conf file.", m_dataPath.c_str(), m_dataPath.c_str());
         Log::WaitBeforeContinueIfNeed();
         exit(1);
     }
@@ -1406,7 +1401,7 @@ void World::SetInitialWorldSettings()
             sLog.outError("Scripting library has wrong list functions (outdated?).");
             break;
         case SCRIPT_LOAD_ERR_OUTDATED:
-            sLog.outError("Scripting library build for old mangosd revision. You need rebuild it.");
+            sLog.outError("Scripting library build for old worldserver revision. You need rebuild it.");
             break;
     }
 #else /* ENABLE_SD3 */
@@ -1603,7 +1598,7 @@ void World::showFooter()
         modules_.insert("                Warden : Disabled");
     }
 
-    std::string thisClientVersion (EXPECTED_MANGOSD_CLIENT_VERSION);
+    std::string thisClientVersion (EXPECTED_WORLDSERVER_CLIENT_VERSION);
     std::string thisClientBuilds = AcceptableClientBuildsListStr();
 
     std::string sModules;
@@ -2537,7 +2532,7 @@ bool World::configNoReload(bool reload, eConfigUInt32Values index, char const* f
     uint32 val = sConfig.GetIntDefault(fieldname, defvalue);
     if (val != getConfig(index))
     {
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%u).", fieldname, getConfig(index));
+        sLog.outError("%s option can't be changed at worldserver.conf reload, using current value (%u).", fieldname, getConfig(index));
     }
 
     return false;
@@ -2553,7 +2548,7 @@ bool World::configNoReload(bool reload, eConfigInt32Values index, char const* fi
     int32 val = sConfig.GetIntDefault(fieldname, defvalue);
     if (val != getConfig(index))
     {
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%i).", fieldname, getConfig(index));
+        sLog.outError("%s option can't be changed at worldserver.conf reload, using current value (%i).", fieldname, getConfig(index));
     }
 
     return false;
@@ -2569,7 +2564,7 @@ bool World::configNoReload(bool reload, eConfigFloatValues index, char const* fi
     float val = sConfig.GetFloatDefault(fieldname, defvalue);
     if (val != getConfig(index))
     {
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%f).", fieldname, getConfig(index));
+        sLog.outError("%s option can't be changed at worldserver.conf reload, using current value (%f).", fieldname, getConfig(index));
     }
 
     return false;
@@ -2585,7 +2580,7 @@ bool World::configNoReload(bool reload, eConfigBoolValues index, char const* fie
     bool val = sConfig.GetBoolDefault(fieldname, defvalue);
     if (val != getConfig(index))
     {
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%s).", fieldname, getConfig(index) ? "'true'" : "'false'");
+        sLog.outError("%s option can't be changed at worldserver.conf reload, using current value (%s).", fieldname, getConfig(index) ? "'true'" : "'false'");
     }
 
     return false;

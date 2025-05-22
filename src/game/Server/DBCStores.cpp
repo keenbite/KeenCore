@@ -1,25 +1,24 @@
-/**
- * MaNGOS is a full featured server for World of Warcraft, supporting
- * the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+/* 
+ * Project: KeenCore
+ * License: GNU General Public License v2.0 or later (GPL-2.0+)
  *
- * Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
+ * This file is part of KeenCore.
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Originally based on MaNGOS (Massive Network Game Object Server)
+ * Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
  */
 
 #include "DBCStores.h"
@@ -27,9 +26,7 @@
 #include "Log.h"
 #include "ProgressBar.h"
 #include "SharedDefines.h"
-
 #include "DBCfmt.h"
-
 #include <map>
 
 typedef std::map<uint32, uint32> AreaIDByAreaFlag;
@@ -151,7 +148,7 @@ typedef std::list<std::string> StoreProblemList;
 
 bool IsAcceptableClientBuild(uint32 build)
 {
-    int accepted_versions[] = EXPECTED_MANGOSD_CLIENT_BUILD;
+    int accepted_versions[] = EXPECTED_WORLDSERVER_CLIENT_BUILD;
     for (int i = 0; accepted_versions[i]; ++i)
         if (int(build) == accepted_versions[i])
         {
@@ -164,7 +161,7 @@ bool IsAcceptableClientBuild(uint32 build)
 std::string AcceptableClientBuildsListStr()
 {
     std::ostringstream data;
-    int accepted_versions[] = EXPECTED_MANGOSD_CLIENT_BUILD;
+    int accepted_versions[] = EXPECTED_WORLDSERVER_CLIENT_BUILD;
     for (int i = 0; accepted_versions[i]; ++i)
     {
         data << accepted_versions[i] << " ";
@@ -553,7 +550,7 @@ void LoadDBCStores(const std::string& dataPath)
     // error checks
     if (bad_dbc_files.size() >= DBCFilesCount)
     {
-        sLog.outError("\nIncorrect DataDir value in mangosd.conf or ALL required *.dbc files (%d) not found by path: %sdbc", DBCFilesCount, dataPath.c_str());
+        sLog.outError("\nIncorrect DataDir value in worldserver.conf or ALL required *.dbc files (%d) not found by path: %sdbc", DBCFilesCount, dataPath.c_str());
         Log::WaitBeforeContinueIfNeed();
         exit(1);
     }
