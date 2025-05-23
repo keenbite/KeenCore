@@ -1,25 +1,24 @@
-# MaNGOS is a full featured server for World of Warcraft, supporting
-# the following clients: 1.12.x, 2.4.3, 3.3.5a, 4.3.4a and 5.4.8
+# 
+# Project: KeenCore
+# License: GNU General Public License v2.0 or later (GPL-2.0+)
+# This file is part of KeenCore.
 #
-# Copyright (C) 2005-2025 MaNGOS <https://www.getmangos.eu>
-#
-# This program is free software; you can redistribute it and/or modify
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
+# the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# Originally based on MaNGOS (Massive Network Game Object Server)
+# Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #AH Bot group
 file(GLOB SRC_GRP_AHBOT AuctionHouseBot/*.cpp AuctionHouseBot/*.h)
 source_group("AhBot" FILES ${SRC_GRP_AHBOT})
+
+# AI group
+file(GLOB SRC_GRP_AI AI/*.cpp AI/*.h)
+source_group("AI" FILES ${SRC_GRP_AI})
 
 #Battlegrounds group
 file(GLOB SRC_GRP_BATTLEGROUND BattleGround/*.cpp BattleGround/*.h)
@@ -52,6 +51,10 @@ source_group("Outdoor PvP" FILES ${SRC_GRP_OUTDOOR_PVP})
 #References group
 file(GLOB SRC_GRP_REFERENCES References/*.cpp References/*.h)
 source_group("References" FILES ${SRC_GRP_REFERENCES})
+
+# Scripting group
+file(GLOB SRC_GRP_SCRIPTING Scripting/*.cpp Scripting/*.h)
+source_group("Scripting" FILES ${SRC_GRP_SCRIPTING})
 
 #Server group
 file(GLOB SRC_GRP_SERVER Server/*.cpp Server/*.h)
@@ -222,6 +225,7 @@ target_link_libraries(vmap2
 endif()
 
 add_library(game STATIC
+	${SRC_GRP_AI}
     ${SRC_GRP_AHBOT}
     ${SRC_GRP_BATTLEGROUND}
     ${SRC_GRP_CHAT_COMMANDS}
@@ -231,6 +235,7 @@ add_library(game STATIC
     ${SRC_GRP_OBJECT}
     ${SRC_GRP_OUTDOOR_PVP}
     ${SRC_GRP_REFERENCES}
+	${SRC_GRP_SCRIPTING}
     ${SRC_GRP_SERVER}
     ${SRC_GRP_TIME}
     ${SRC_GRP_TOOL}
@@ -245,6 +250,7 @@ add_library(game STATIC
 target_include_directories(game
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+		AI
         AuctionHouseBot
         BattleGround
         ChatCommands
@@ -253,6 +259,7 @@ target_include_directories(game
         Object
         OutdoorPvP
         References
+		Scripting
         Server
         Time
         Tools
@@ -286,7 +293,7 @@ target_link_libraries(game
         RecastNavigation::Detour
         ZLIB::ZLIB
         g3dlite
-        $<$<BOOL:${SCRIPT_LIB_SD3}>:mangosscript>
+		scripts
         $<$<BOOL:${SCRIPT_LIB_ELUNA}>:lualib>
 )
 

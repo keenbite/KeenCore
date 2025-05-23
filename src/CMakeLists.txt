@@ -15,6 +15,7 @@
 # Build the shared library
 add_subdirectory(shared)
 add_subdirectory(genrev)
+add_subdirectory(scripts)
 
 # Needs to link against world.lib
 if(BUILD_WORLDSERVER)
