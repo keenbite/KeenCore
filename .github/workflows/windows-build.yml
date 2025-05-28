@@ -3,10 +3,10 @@ name: Windows x64 Release Build (MSVC)
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 env:
   MYSQL_VERSION: '5.7.40'
@@ -24,7 +24,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install dependencies via Chocolatey
+    - name: Install dependencies via Chocolatey (ohne VS Build Tools)
       run: |
         choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
         choco install ninja -y
@@ -33,7 +33,6 @@ jobs:
         choco install mysql --version=%MYSQL_VERSION% -y
         choco install openssl -y
         choco install ace -y
-        choco install visualstudio2022buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --quiet --norestart" -y
 
     - name: Configure CMake (Visual Studio 2022 x64)
       run: |
