@@ -28,6 +28,10 @@ source_group("BattleGround" FILES ${SRC_GRP_BATTLEGROUND})
 file(GLOB SRC_GRP_CHAT_COMMANDS ChatCommands/*.cpp ChatCommands/*.h)
 source_group("Chat Commands" FILES ${SRC_GRP_CHAT_COMMANDS})
 
+# Handler group
+file(GLOB SRC_GRP_HANDLER Handler/*.cpp Handler/*.h)
+source_group("Handler" FILES ${SRC_GRP_HANDLER})
+
 #Map Threading group
 file(GLOB SRC_GRP_MAP_THREAD Maps/*.cpp Maps/*.h)
 source_group("Map Threading" FILES ${SRC_GRP_MAP_THREAD})
@@ -229,6 +233,7 @@ add_library(game STATIC
     ${SRC_GRP_AHBOT}
     ${SRC_GRP_BATTLEGROUND}
     ${SRC_GRP_CHAT_COMMANDS}
+	${SRC_GRP_HANDLER}
     ${SRC_GRP_MAP_THREAD}
     ${SRC_GRP_MOTION_GEN}
     ${SRC_GRP_MOVEMENT}
@@ -254,12 +259,13 @@ target_include_directories(game
         AuctionHouseBot
         BattleGround
         ChatCommands
+	Handler
         Maps
         MotionGenerators
         Object
         OutdoorPvP
         References
-		Scripting
+	Scripting
         Server
         Time
         Tools
