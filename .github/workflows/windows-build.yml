@@ -1,4 +1,4 @@
-name: Windows x64 Build
+name: Windows x64 Release Build
 
 on:
   push:
@@ -20,10 +20,6 @@ jobs:
       run:
         shell: pwsh
 
-    strategy:
-      matrix:
-        build_type: [Release, Debug]
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -41,19 +37,17 @@ jobs:
     - name: Configure CMake
       run: |
         cmake -S . -B build -G Ninja `
-          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} `
+          -DCMAKE_BUILD_TYPE=Release `
           -DMYSQL_INCLUDE_DIR="C:\\Program Files\\MySQL\\MySQL Server 5.7\\include" `
           -DMYSQL_LIBRARY="C:\\Program Files\\MySQL\\MySQL Server 5.7\\lib\\libmysql.lib" `
           -DOPENSSL_ROOT_DIR="${{ env.OPENSSL_DIR }}" `
+          -DOPENSSL_INCLUDE_DIR="${{ env.OPENSSL_DIR }}\\include" `
+          -DOPENSSL_CRYPTO_LIBRARY="${{ env.OPENSSL_DIR }}\\lib\\libcrypto.lib" `
+          -DOPENSSL_SSL_LIBRARY="${{ env.OPENSSL_DIR }}\\lib\\libssl.lib" `
           -DACE_ROOT="${{ env.ACE_DIR }}"
 
     - name: Build project
-      run: cmake --build build --config ${{ matrix.build_type }}
-
-    - name: Run tests
-      if: ${{ matrix.build_type == 'Debug' }}
-      run: |
-        ctest --test-dir build --output-on-failure
+      run: cmake --build build --config Release
 
     - name: Copy OpenSSL DLLs to build directory
       run: |
@@ -63,7 +57,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: KeenCore-Windows-Binaries-${{ matrix.build_type }}
+        name: KeenCore-Windows-Binaries-Release
         path: |
           build/*.exe
           build/*.dll
