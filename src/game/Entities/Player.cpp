@@ -2787,6 +2787,8 @@ void Player::GiveLevel(uint32 level)
         return;
     }
 
+    sScriptMgr.OnPlayerLevelChanged(this, level);
+
     PlayerLevelInfo info;
     sObjectMgr.GetPlayerLevelInfo(getRace(), getClass(), level, &info);
 
@@ -2875,6 +2877,7 @@ void Player::SetFreeTalentPoints(uint32 points)
     }
 #endif /* ENABLE_ELUNA */
 
+    sScriptMgr.OnPlayerFreeTalentPointsChanged(this, points);
     SetUInt32Value(PLAYER_CHARACTER_POINTS1, points);
 }
 
@@ -4087,6 +4090,8 @@ uint32 Player::resetTalentsCost() const
 
 bool Player::resetTalents(bool no_cost)
 {
+    sScriptMgr.OnPlayerTalentsReset(this, no_cost);
+
     // Used by Eluna
 #ifdef ENABLE_ELUNA
     if (Eluna* e = GetEluna())
@@ -7513,6 +7518,8 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
 
     m_zoneUpdateId    = newZone;
     m_zoneUpdateTimer = ZONE_UPDATE_INTERVAL;
+
+    sScriptMgr.OnPlayerUpdateZone(this, newZone, newArea);
 
     // zone changed, so area changed as well, update it
     UpdateArea(newArea);

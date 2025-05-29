@@ -71,6 +71,12 @@ ScriptMgr::~ScriptMgr()
     m_dbScripts.clear();
 }
 
+ScriptMgr* ScriptMgr::GetInstance()
+{
+    static ScriptMgr instance;
+    return &instance;
+}
+
 ScriptChainMap const* ScriptMgr::GetScriptChainMap(DBScriptType type)
 {
     ACE_GUARD_RETURN(ACE_Thread_Mutex, _guard, m_lock, NULL)
@@ -3142,6 +3148,83 @@ bool ScriptMgr::OnAuraDummy(Aura const* pAura, bool apply)
 #endif
 }
 
+// 1. OnPVPKill
+void ScriptMgr::OnPVPKill(Player* killer, Player* killed)
+{
+    const auto& scripts = GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnPVPKill(killer, killed);
+    }
+}
+
+// 2. OnCreatureKill
+void ScriptMgr::OnCreatureKill(Player* killer, Creature* killed)
+{
+    const auto& scripts = GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnCreatureKill(killer, killed);
+    }
+}
+
+// 3. OnPlayerKilledByCreature
+void ScriptMgr::OnPlayerKilledByCreature(Creature* killer, Player* killed)
+{
+    const auto& scripts = GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnPlayerKilledByCreature(killer, killed);
+    }
+}
+
+// 4. OnPlayerLevelChanged
+void ScriptMgr::OnPlayerLevelChanged(Player* player, uint8 newLevel)
+{
+    const auto& scripts = GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnLevelChanged(player, newLevel);
+    }
+}
+
+// 5. OnPlayerFreeTalentPointsChanged
+void ScriptMgr::OnPlayerFreeTalentPointsChanged(Player* player, uint32 newPoints)
+{
+    const auto& scripts = GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnFreeTalentPointsChanged(player, newPoints);
+    }
+}
+
+// 6. OnPlayerTalentsReset
+void ScriptMgr::OnPlayerTalentsReset(Player* player, bool no_cost)
+{
+    const auto& scripts = GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnTalentsReset(player, no_cost);
+    }
+}
+
+// 7. OnPlayerUpdateZone
+void ScriptMgr::OnPlayerUpdateZone(Player* player, uint32 newZone, uint32 newArea)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnUpdateZone(player, newZone, newArea);
+    }
+}
+
 ScriptLoadResult ScriptMgr::LoadScriptLibrary(const char* libName)
 {
 #ifdef ENABLE_SD3
@@ -3348,4 +3431,73 @@ void SetExternalWaypointTable(char const* tableName)
 bool AddWaypointFromExternal(uint32 entry, int32 pathId, uint32 pointId, float x, float y, float z, float o, uint32 waittime)
 {
     return sWaypointMgr.AddExternalNode(entry, pathId, pointId, x, y, z, o, waittime);
+}
+
+void PlayerScript::OnPVPKill(Player* killer, Player* killed)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        script->OnPVPKill(killer, killed);
+    }
+}
+
+void PlayerScript::OnCreatureKill(Player* killer, Creature* killed)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnCreatureKill(killer, killed);
+    }
+}
+
+void PlayerScript::OnPlayerKilledByCreature(Creature* killer, Player* killed)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnPlayerKilledByCreature(killer, killed);
+    }
+}
+
+void PlayerScript::OnLevelChanged(Player* player, uint8 newLevel)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnLevelChanged(player, newLevel);
+    }
+}
+
+void PlayerScript::OnFreeTalentPointsChanged(Player* player, uint32 points)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnFreeTalentPointsChanged(player, points);
+    }
+}
+
+void PlayerScript::OnTalentsReset(Player* player, bool no_cost)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnTalentsReset(player, no_cost);
+    }
+}
+
+void PlayerScript::OnUpdateZone(Player* player, uint32 newZone, uint32 newArea)
+{
+    const auto& scripts = ScriptMgr::GetInstance()->GetPlayerScripts();
+    for (PlayerScript* script : scripts)
+    {
+        if (script)
+            script->OnUpdateZone(player, newZone, newArea);
+    }
 }

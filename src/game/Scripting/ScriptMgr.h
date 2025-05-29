@@ -43,6 +43,7 @@ class Item;
 class Map;
 class Object;
 class Player;
+class PlayerScript;
 class Quest;
 class SpellCastTargets;
 class Unit;
@@ -80,6 +81,7 @@ enum ScriptedObjectType
     SCRIPTED_INSTANCE       = 10,   //InstanceScript
     SCRIPTED_CONDITION      = 11,   //ConditionScript
     SCRIPTED_ACHIEVEMENT    = 12,   //AchievementScript
+    SCRIPTED_PLAYERSCRIPT   = 13,   //PlayerScript
     SCRIPTED_MAX_TYPE
 };
 
@@ -616,6 +618,8 @@ class ScriptMgr
         ScriptMgr();
         ~ScriptMgr();
 
+        static ScriptMgr* GetInstance();
+
         std::string GenerateNameToId(ScriptedObjectType sot, uint32 id);
 
         void LoadDbScripts(DBScriptType type);
@@ -633,6 +637,16 @@ class ScriptMgr
         bool ReloadScriptBinding();
 
         ScriptChainMap const* GetScriptChainMap(DBScriptType type);
+
+        void RegisterPlayerScript(PlayerScript* script)
+        {
+            _playerScripts.push_back(script);
+        }
+
+        const std::vector<PlayerScript*>& GetPlayerScripts() const
+        {
+            return _playerScripts;
+        }
 
         const char* GetScriptName(uint32 id) const
         {
@@ -709,6 +723,16 @@ class ScriptMgr
         bool OnEffectScriptEffect(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Unit* pTarget, ObjectGuid originalCasterGuid);
         bool OnAuraDummy(Aura const* pAura, bool apply);
 
+
+    public: /* PlayerScript */
+        void OnPVPKill(Player* killer, Player* killed);
+        void OnCreatureKill(Player* killer, Creature* killed);
+        void OnPlayerKilledByCreature(Creature* killer, Player* killed);
+        void OnPlayerLevelChanged(Player* player, uint8 newLevel);
+        void OnPlayerFreeTalentPointsChanged(Player* player, uint32 newPoints);
+        void OnPlayerTalentsReset(Player* player, bool no_cost);
+        void OnPlayerUpdateZone(Player* player, uint32 newZone, uint32 newArea);
+
     private:
         void CollectPossibleEventIds(std::set<uint32>& eventIds);
         void LoadScripts(DBScriptType type);
@@ -717,6 +741,7 @@ class ScriptMgr
         typedef std::vector<std::string> ScriptNameMap;
         typedef UNORDERED_MAP<int32, uint32> EntryToScriptIdMap;
 
+        std::vector<PlayerScript*> _playerScripts;
         EntryToScriptIdMap m_scriptBind[SCRIPTED_MAX_TYPE];
 
         ScriptNameMap      m_scriptNames;

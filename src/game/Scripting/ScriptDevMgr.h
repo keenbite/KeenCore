@@ -29,8 +29,8 @@
 
 #include "Common.h"
 #include "DBCStructure.h"
-#include "ScriptMgr.h"
 #include "QuestDef.h"
+#include "ScriptMgr.h"
 
 class Player;
 class Creature;
@@ -333,6 +333,34 @@ struct ConditionScript : public Script
 struct AchievementScript : public Script
 {
     AchievementScript(const char* name) : Script(SCRIPTED_ACHIEVEMENT, name) {}
+};
+
+class PlayerScript : public Script
+{
+public:
+    PlayerScript(const char* name) : Script(SCRIPTED_PLAYERSCRIPT, name) {}
+    virtual ~PlayerScript() = default;
+
+    // Called when a player kills another player
+    virtual void OnPVPKill(Player* killer, Player* killed);
+
+    // Called when a player kills a creature
+    virtual void OnCreatureKill(Player* killer, Creature* killed);
+
+    // Called when a player is killed by a creature
+    virtual void OnPlayerKilledByCreature(Creature* killer, Player* killed);
+
+    // Called when a player's level changes (right before the level is applied)
+    virtual void OnLevelChanged(Player* player, uint8 newLevel);
+
+    // Called when a player's free talent points change (right before the change is applied)
+    virtual void OnFreeTalentPointsChanged(Player* player, uint32 points);
+
+    // Called when a player's talent points are reset (right before the reset is done)
+    virtual void OnTalentsReset(Player* player, bool no_cost);
+
+    // Called when a player switches to a new zone
+    virtual void OnUpdateZone(Player* player, uint32 newZone, uint32 newArea);
 };
 
 // *********************************************************
