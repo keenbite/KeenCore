@@ -12,57 +12,125 @@
 # Copyright (C) 2005-2025 MaNGOS project <https://getmangos.eu>
 #
 
-#AH Bot group
-file(GLOB SRC_GRP_AHBOT AuctionHouseBot/*.cpp AuctionHouseBot/*.h)
-source_group("AhBot" FILES ${SRC_GRP_AHBOT})
+#Account group
+file(GLOB SRC_GRP_ACCOUNT Account/*.cpp Account/*.h)
+source_group("Account" FILES ${SRC_GRP_ACCOUNT})
 
 # AI group
 file(GLOB SRC_GRP_AI AI/*.cpp AI/*.h)
 source_group("AI" FILES ${SRC_GRP_AI})
 
+# AuctionHouse group
+file(GLOB SRC_GRP_AUCTIONHOUSE AuctionHouse/*.cpp AuctionHouse/*.h)
+source_group("AuctionHouse" FILES ${SRC_GRP_AUCTIONHOUSE})
+
+#AH Bot group
+file(GLOB SRC_GRP_AHBOT AuctionHouseBot/*.cpp AuctionHouseBot/*.h)
+source_group("AhBot" FILES ${SRC_GRP_AHBOT})
+
 #Battlegrounds group
 file(GLOB SRC_GRP_BATTLEGROUND BattleGround/*.cpp BattleGround/*.h)
 source_group("BattleGround" FILES ${SRC_GRP_BATTLEGROUND})
+
+#Chat group
+file(GLOB SRC_GRP_CHAT Chat/*.cpp Chat/*.h)
+source_group("Chat" FILES ${SRC_GRP_CHAT})
 
 #Chat Commands group
 file(GLOB SRC_GRP_CHAT_COMMANDS ChatCommands/*.cpp ChatCommands/*.h)
 source_group("Chat Commands" FILES ${SRC_GRP_CHAT_COMMANDS})
 
-# Handler group
+#Entities group
+file(GLOB SRC_GRP_ENTITIES Entities/*.cpp Entities/*.h)
+source_group("Entities" FILES ${SRC_GRP_ENTITIES})
+
+#GameEvent group
+file(GLOB SRC_GRP_GAME_EVENT GameEvent/*.cpp GameEvent/*.h)
+source_group("Game Event" FILES ${SRC_GRP_GAME_EVENT})
+
+#GMTicket group
+file(GLOB SRC_GRP_GM_TICKET GMTicket/*.cpp GMTicket/*.h)
+source_group("GM Ticket" FILES ${SRC_GRP_GM_TICKET})
+
+#Group group
+file(GLOB SRC_GRP_GROUP Group/*.cpp Group/*.h)
+source_group("Group" FILES ${SRC_GRP_GROUP})
+
+#Guild group
+file(GLOB SRC_GRP_GUILD Guild/*.cpp Guild/*.h)
+source_group("Guild" FILES ${SRC_GRP_GUILD})
+
+#Handler group
 file(GLOB SRC_GRP_HANDLER Handler/*.cpp Handler/*.h)
 source_group("Handler" FILES ${SRC_GRP_HANDLER})
+
+#Instance group
+file(GLOB SRC_GRP_INSTANCE Instance/*.cpp Instance/*.h)
+source_group("Instance" FILES ${SRC_GRP_INSTANCE})
+
+#Items group
+file(GLOB SRC_GRP_ITEMS Items/*.cpp Items/*.h)
+source_group("Items" FILES ${SRC_GRP_ITEMS})
+
+#Loot group
+file(GLOB SRC_GRP_LOOT Loot/*.cpp Loot/*.h)
+source_group("Loot" FILES ${SRC_GRP_LOOT})
+
+#Mail group
+file(GLOB SRC_GRP_MAIL Mail/*.cpp Mail/*.h)
+source_group("Mail" FILES ${SRC_GRP_MAIL})
 
 #Map Threading group
 file(GLOB SRC_GRP_MAP_THREAD Maps/*.cpp Maps/*.h)
 source_group("Map Threading" FILES ${SRC_GRP_MAP_THREAD})
+
+#Misc group
+file(GLOB SRC_GRP_MISC Misc/*.cpp Misc/*.h)
+source_group("Misc" FILES ${SRC_GRP_MISC})
 
 #Motion Generator group
 file(GLOB SRC_GRP_MOTION_GEN MotionGenerators/*.cpp MotionGenerators/*.h)
 source_group("Motion generators" FILES ${SRC_GRP_MOTION_GEN})
 
 #Movement group
-file(GLOB SRC_GRP_MOVEMENT movement/*.cpp movement/*.h)
+file(GLOB SRC_GRP_MOVEMENT Movement/*.cpp Movement/*.h)
 source_group("Movement" FILES ${SRC_GRP_MOVEMENT})
 
-#Object group
-file(GLOB SRC_GRP_OBJECT Object/*.cpp Object/*.h)
-source_group("Object" FILES ${SRC_GRP_OBJECT})
-
-#Outdoors PvP group
+#OutdoorPvP group
 file(GLOB SRC_GRP_OUTDOOR_PVP OutdoorPvP/*.cpp OutdoorPvP/*.h)
-source_group("Outdoor PvP" FILES ${SRC_GRP_OUTDOOR_PVP})
+source_group("OutdoorPvP" FILES ${SRC_GRP_OUTDOOR_PVP})
+
+#Pool group
+file(GLOB SRC_GRP_POOL Pool/*.cpp Pool/*.h)
+source_group("Pool" FILES ${SRC_GRP_POOL})
+
+#Quest group
+file(GLOB SRC_GRP_QUEST Quest/*.cpp Quest/*.h)
+source_group("Quest" FILES ${SRC_GRP_QUEST})
 
 #References group
 file(GLOB SRC_GRP_REFERENCES References/*.cpp References/*.h)
 source_group("References" FILES ${SRC_GRP_REFERENCES})
 
-# Scripting group
+#Reputation group
+file(GLOB SRC_GRP_REPUTATION Reputation/*.cpp Reputation/*.h)
+source_group("Reputation" FILES ${SRC_GRP_REPUTATION})
+
+#Scripting group
 file(GLOB SRC_GRP_SCRIPTING Scripting/*.cpp Scripting/*.h)
 source_group("Scripting" FILES ${SRC_GRP_SCRIPTING})
 
 #Server group
 file(GLOB SRC_GRP_SERVER Server/*.cpp Server/*.h)
 source_group("Server" FILES ${SRC_GRP_SERVER})
+
+#Social group
+file(GLOB SRC_GRP_SOCIAL Social/*.cpp Social/*.h)
+source_group("Social" FILES ${SRC_GRP_SOCIAL})
+
+#Spell group
+file(GLOB SRC_GRP_SPELL Spell/*.cpp Spell/*.h)
+source_group("Spell" FILES ${SRC_GRP_SPELL})
 
 #Time group
 file(GLOB SRC_GRP_TIME Time/*.cpp Time/*.h)
@@ -73,8 +141,8 @@ file(GLOB SRC_GRP_TOOL Tools/*.cpp Tools/*.h)
 source_group("Tool" FILES ${SRC_GRP_TOOL})
 
 #VMap group
-file(GLOB SRC_GRP_VMAPS vmap/*.cpp vmap/*.h)
-source_group("vmaps" FILES ${SRC_GRP_VMAPS})
+file(GLOB SRC_GRP_VMAPS VMap/*.cpp VMap/*.h)
+source_group("VMaps" FILES ${SRC_GRP_VMAPS})
 
 #Warden group
 file(GLOB SRC_GRP_WARDEN Warden/*.cpp Warden/*.h)
@@ -84,9 +152,13 @@ source_group("Warden" FILES ${SRC_GRP_WARDEN})
 file(GLOB SRC_GRP_WARDEN_MODULES Warden/Modules/*.cpp Warden/Modules/*.h)
 source_group("Warden\\Modules" FILES ${SRC_GRP_WARDEN_MODULES})
 
-#World and Handlers group
-file(GLOB SRC_GRP_WORLD_HANDLERS WorldHandlers/*.cpp WorldHandlers/*.h)
-source_group("World\\Handlers" FILES ${SRC_GRP_WORLD_HANDLERS})
+#Weather group
+file(GLOB SRC_GRP_WEATHER Weather/*.cpp Weather/*.h)
+source_group("Weather" FILES ${SRC_GRP_WEATHER})
+
+#Worldgroup
+file(GLOB SRC_GRP_WORLD World/*.cpp World/*.h)
+source_group("World" FILES ${SRC_GRP_WORLD})
 
 # Build the Eluna library if enabled
 if(SCRIPT_LIB_ELUNA)
@@ -229,25 +301,43 @@ target_link_libraries(vmap2
 endif()
 
 add_library(game STATIC
+	${SRC_GRP_ACCOUNT}
 	${SRC_GRP_AI}
-    ${SRC_GRP_AHBOT}
-    ${SRC_GRP_BATTLEGROUND}
-    ${SRC_GRP_CHAT_COMMANDS}
+	${SRC_GRP_AUCTIONHOUSE}
+	${SRC_GRP_AHBOT}
+	${SRC_GRP_BATTLEGROUND}
+	${SRC_GRP_CHAT}
+	${SRC_GRP_CHAT_COMMANDS}
+	${SRC_GRP_ENTITIES}
+	${SRC_GRP_GAME_EVENT}
+	${SRC_GRP_GM_TICKET}
+	${SRC_GRP_GROUP}
+	${SRC_GRP_GUILD}
 	${SRC_GRP_HANDLER}
-    ${SRC_GRP_MAP_THREAD}
-    ${SRC_GRP_MOTION_GEN}
-    ${SRC_GRP_MOVEMENT}
-    ${SRC_GRP_OBJECT}
-    ${SRC_GRP_OUTDOOR_PVP}
-    ${SRC_GRP_REFERENCES}
+	${SRC_GRP_INSTANCE}
+	${SRC_GRP_ITEMS}
+	${SRC_GRP_LOOT}
+	${SRC_GRP_MAIL}
+	${SRC_GRP_MAP_THREAD}
+	${SRC_GRP_MISC}
+	${SRC_GRP_MOTION_GEN}
+	${SRC_GRP_MOVEMENT}
+	${SRC_GRP_OUTDOOR_PVP}
+	${SRC_GRP_POOL}
+	${SRC_GRP_QUEST}
+	${SRC_GRP_REFERENCES}
+	${SRC_GRP_REPUTATION}
 	${SRC_GRP_SCRIPTING}
-    ${SRC_GRP_SERVER}
-    ${SRC_GRP_TIME}
-    ${SRC_GRP_TOOL}
-    ${SRC_GRP_VMAPS}
-    ${SRC_GRP_WARDEN}
-    ${SRC_GRP_WARDEN_MODULES}
-    ${SRC_GRP_WORLD_HANDLERS}
+	${SRC_GRP_SERVER}
+	${SRC_GRP_SOCIAL}
+	${SRC_GRP_SPELL}
+	${SRC_GRP_TIME}
+	${SRC_GRP_TOOL}
+	${SRC_GRP_VMAPS}
+	${SRC_GRP_WARDEN}
+	${SRC_GRP_WARDEN_MODULES}
+	${SRC_GRP_WEATHER}
+	${SRC_GRP_WORLD}
     $<$<BOOL:${SCRIPT_LIB_ELUNA}>:${SRC_GRP_ELUNA}>
     $<$<BOOL:${PLAYERBOTS}>:${SRC_GRP_BOTS}>
 )
@@ -255,24 +345,43 @@ add_library(game STATIC
 target_include_directories(game
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-		AI
-        AuctionHouseBot
-        BattleGround
-        ChatCommands
-	Handler
-        Maps
-        MotionGenerators
-        Object
-        OutdoorPvP
-        References
-	Scripting
-        Server
-        Time
-        Tools
-        vmap
-        Warden
-        Warden/Modules
-        WorldHandlers
+	Account
+    AI
+	AuctionHouse
+	AuctionHouseBot
+    BattleGround
+    Chat
+    ChatCommands
+    Entities
+    GameEvent
+    GMTicket
+    Group
+	Guild
+    Handler
+	Instance
+	Items
+	Loot
+	Mail
+    Maps
+	Misc
+    MotionGenerators
+    Movement
+    OutdoorPvP
+	Pool
+	Quest
+    References
+	Reputation
+    Scripting
+    Server
+	Social
+	Spell
+    Time
+    Tools
+    VMap
+    Warden
+    Warden/Modules
+	Weather
+    World
         $<$<BOOL:${SCRIPT_LIB_ELUNA}>:
             ${CMAKE_SOURCE_DIR}/src/modules/Eluna
             ${CMAKE_SOURCE_DIR}/src/modules/Eluna/hooks

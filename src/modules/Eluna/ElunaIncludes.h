@@ -10,7 +10,7 @@
 // Required
 #if !defined ELUNA_CMANGOS
 #include "AccountMgr.h"
-#include "AuctionHouseMgr.h"
+#include "../AuctionHouse/AuctionHouseMgr.h"
 #include "Bag.h"
 #include "Cell.h"
 #include "CellImpl.h"
